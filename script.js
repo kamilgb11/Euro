@@ -1,35 +1,45 @@
-const sheetId = '1EJxYUQO3-3hcB8d5l6fviggd-cBL2GTI'; // Zamień na swój ID arkusza
 const uczestnicy = [
-    { name: "Uczestnik 1", img: "path/to/image1.jpg", range: 'B21:Z21' },
-    { name: "Uczestnik 2", img: "path/to/image2.jpg", range: 'B22:Z22' },
-    { name: "Uczestnik 3", img: "path/to/image3.jpg", range: 'B23:Z23' },
-    { name: "Uczestnik 4", img: "path/to/image4.jpg", range: 'B24:Z24' },
-    { name: "Uczestnik 5", img: "path/to/image5.jpg", range: 'B25:Z25' },
-    { name: "Uczestnik 6", img: "path/to/image6.jpg", range: 'B26:Z26' },
-    { name: "Uczestnik 7", img: "path/to/image7.jpg", range: 'B27:Z27' },
-    { name: "Uczestnik 8", img: "path/to/image8.jpg", range: 'B28:Z28' },
-    { name: "Uczestnik 9", img: "path/to/image9.jpg", range: 'B29:Z29' },
-    { name: "Uczestnik 10", img: "path/to/image10.jpg", range: 'B30:Z30' },
-    { name: "Uczestnik 11", img: "path/to/image11.jpg", range: 'B31:Z31' },
-    { name: "Uczestnik 12", img: "path/to/image12.jpg", range: 'B32:Z32' }
+    { name: "Miki", img: "zdjecia/miki.png", rangeStart: 21 },   // Zaczynamy od wiersza 22
+    { name: "jędrek", img: "path/to/image2.jpg", rangeStart: 22 }, // Zaczynamy od wiersza 23
+    { name: "Szymon Sialala", img: "path/to/image3.jpg", rangeStart: 23 },
+    { name: "Dupiaty", img: "zdjecia/kowalik.jpg", rangeStart: 24 },
+    { name: "Grzesiu", img: "path/to/image5.jpg", rangeStart: 25 },
+    { name: "Buła", img: "path/to/image6.jpg", rangeStart: 26 },
+    { name: "Mientus", img: "zdjecia/mientus.jpg", rangeStart: 27 },
+    { name: "Partycki", img: "zdjecia/partycki.png", rangeStart: 28 },
+    { name: "Stary Parzy", img: "path/to/image9.jpg", rangeStart: 29 },
+    { name: "Młody Parzy", img: "path/to/image10.jpg", rangeStart: 30 },
+    { name: "Damian", img: "path/to/image11.jpg", rangeStart: 31 },
+    { name: "Seba", img: "path/to/image12.jpg", rangeStart: 32 }   // Zaczynamy od wiersza 33
 ];
 
-function fetchSheetData(uczestnik) {
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&range=${uczestnik.range}`;
-    return fetch(url)
-        .then(response => response.text())
+function fetchSheetData() {
+    return fetch('TABELA.xlsx')
+        .then(response => response.arrayBuffer())
         .then(data => {
-            const rows = data.trim().split('\n');
-            const values = rows.map(row => {
-                const value = row.split(',')[0];
-                return value ? parseInt(value, 10) : 0; // Upewnij się, że wartość jest liczbą
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const uczestnicyData = uczestnicy.map(uczestnik => {
+                let points = 0;
+                const rangeStart = uczestnik.rangeStart;
+                const rangeEnd = rangeStart; // Koniec zakresu to ten sam wiersz jak na początku
+
+                for (let row = rangeStart - 1; row <= rangeEnd - 1; row++) {
+                    for (let col = 1; col <= 25; col++) { // Zakres od B do Z
+                        const cellAddress = XLSX.utils.encode_cell({ c: col, r: row });
+                        const cell = sheet[cellAddress];
+                        const value = cell ? parseInt(cell.v, 10) : 0;
+                        if (!isNaN(value) && (value === 0 || value === 1 || value === 3)) {
+                            points += value;
+                        }
+                    }
+                }
+                return { name: uczestnik.name, img: uczestnik.img, points };
             });
-            const points = values.reduce((a, b) => a + b, 0);
-            return { name: uczestnik.name, img: uczestnik.img, points };
+            updateTable(uczestnicyData);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            return { name: uczestnik.name, img: uczestnik.img, points: 0 };
         });
 }
 
@@ -50,9 +60,4 @@ function updateTable(uczestnicyData) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    Promise.all(uczestnicy.map(fetchSheetData))
-        .then(uczestnicyData => {
-            updateTable(uczestnicyData);
-        });
-});
+document.addEventListener('DOMContentLoaded', fetchSheetData);
