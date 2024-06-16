@@ -1,16 +1,16 @@
 const uczestnicy = [
-    { name: "Miki", img: "zdjecia/miki.png", rangeStart: 21 },   // Zaczynamy od wiersza 22
-    { name: "jędrek", img: "path/to/image2.jpg", rangeStart: 22 }, // Zaczynamy od wiersza 23
-    { name: "Szymon Sialala", img: "path/to/image3.jpg", rangeStart: 23 },
+    { name: "Miki", img: "zdjecia/miki.png", rangeStart: 21 },  
+    { name: "jędrek", img: "zdjecia/jedrek.jpg", rangeStart: 22 }, 
+    { name: "Szymon Sialala", img: "zdjecia/tomala.jpg", rangeStart: 23 },
     { name: "Dupiaty", img: "zdjecia/kowalik.jpg", rangeStart: 24 },
-    { name: "Grzesiu", img: "path/to/image5.jpg", rangeStart: 25 },
+    { name: "Grzesiu", img: "zdjecia/grzesiu.png", rangeStart: 25 },
     { name: "Buła", img: "path/to/image6.jpg", rangeStart: 26 },
     { name: "Mientus", img: "zdjecia/mientus.jpg", rangeStart: 27 },
     { name: "Partycki", img: "zdjecia/partycki.png", rangeStart: 28 },
     { name: "Stary Parzy", img: "path/to/image9.jpg", rangeStart: 29 },
     { name: "Młody Parzy", img: "path/to/image10.jpg", rangeStart: 30 },
     { name: "Damian", img: "path/to/image11.jpg", rangeStart: 31 },
-    { name: "Seba", img: "path/to/image12.jpg", rangeStart: 32 }   // Zaczynamy od wiersza 33
+    { name: "Seba", img: "path/to/image12.jpg", rangeStart: 32 }   
 ];
 
 function fetchSheetData() {
@@ -22,7 +22,7 @@ function fetchSheetData() {
             const uczestnicyData = uczestnicy.map(uczestnik => {
                 let points = 0;
                 const rangeStart = uczestnik.rangeStart;
-                const rangeEnd = rangeStart; // Koniec zakresu to ten sam wiersz jak na początku
+                const rangeEnd = rangeStart; 
 
                 for (let row = rangeStart - 1; row <= rangeEnd - 1; row++) {
                     for (let col = 1; col <= 25; col++) { // Zakres od B do Z
@@ -45,7 +45,7 @@ function fetchSheetData() {
 
 function updateTable(uczestnicyData) {
     const tableBody = document.querySelector('#wynikiTable tbody');
-    tableBody.innerHTML = ''; // Czyszczenie tabeli
+    tableBody.innerHTML = ''; 
 
     uczestnicyData.sort((a, b) => b.points - a.points); // Sortowanie według punktów
 
