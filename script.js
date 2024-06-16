@@ -4,13 +4,13 @@ const uczestnicy = [
     { name: "Szymon Sialala", img: "zdjecia/tomala.jpg", rangeStart: 23 },
     { name: "Dupiaty", img: "zdjecia/kowalik.jpg", rangeStart: 24 },
     { name: "Grzesiu", img: "zdjecia/grzesiu.png", rangeStart: 25 },
-    { name: "Buła", img: "path/to/image6.jpg", rangeStart: 26 },
+    { name: "Buła", img: "zdjecia/buła.png", rangeStart: 26 },
     { name: "Mientus", img: "zdjecia/mientus.jpg", rangeStart: 27 },
     { name: "Partycki", img: "zdjecia/partycki.png", rangeStart: 28 },
-    { name: "Stary Parzy", img: "path/to/image9.jpg", rangeStart: 29 },
-    { name: "Młody Parzy", img: "path/to/image10.jpg", rangeStart: 30 },
-    { name: "Damian", img: "path/to/image11.jpg", rangeStart: 31 },
-    { name: "Seba", img: "path/to/image12.jpg", rangeStart: 32 }   
+    { name: "Stary Parzy", img: "zdjecia/guest.png", rangeStart: 29 },
+    { name: "Młody Parzy", img: "zdjecia/guest.png", rangeStart: 30 },
+    { name: "Damian", img: "zdjecia/guest.png", rangeStart: 31 },
+    { name: "Seba", img: "zdjecia/guest.png", rangeStart: 32 }   
 ];
 
 function fetchSheetData() {
