@@ -25,7 +25,7 @@ function fetchSheetData() {
                 const rangeEnd = rangeStart; 
 
                 for (let row = rangeStart - 1; row <= rangeEnd - 1; row++) {
-                    for (let col = 1; col <= 25; col++) { // Zakres od B do Z
+                    for (let col = 1; col <= 25; col++) { // Zakres od B do Z!!!
                         const cellAddress = XLSX.utils.encode_cell({ c: col, r: row });
                         const cell = sheet[cellAddress];
                         const value = cell ? parseInt(cell.v, 10) : 0;
@@ -47,7 +47,7 @@ function updateTable(uczestnicyData) {
     const tableBody = document.querySelector('#wynikiTable tbody');
     tableBody.innerHTML = ''; 
 
-    uczestnicyData.sort((a, b) => b.points - a.points); // Sortowanie według punktów
+    uczestnicyData.sort((a, b) => b.points - a.points); // Sortowanie
 
     uczestnicyData.forEach(uczestnik => {
         const row = document.createElement('tr');
