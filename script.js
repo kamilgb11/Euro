@@ -25,7 +25,7 @@ function fetchSheetData() {
                 const rangeEnd = rangeStart; 
 
                 for (let row = rangeStart - 1; row <= rangeEnd - 1; row++) {
-                    for (let col = 1; col <= 25; col++) { // Zakres od B do Z!!!
+                    for (let col = 1; col <= 60; col++) { // Zakres od B do Z!!!
                         const cellAddress = XLSX.utils.encode_cell({ c: col, r: row });
                         const cell = sheet[cellAddress];
                         const value = cell ? parseInt(cell.v, 10) : 0;
